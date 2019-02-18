@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	var foodData = [];
+    var foodType = ["Italian_food", "Hamburger"]
+    for (var i = 0; i < foodType.length; i++) {
+        var wikiTextInput = foodType[i];
+        var wikiUrl = 'http://en.wikipedia.org/w/api.php?' +
+                      'action=opensearch&' + 
+                      'search=' + wikiTextInput +
+                      '&format=json&callback=wikiCallback';
+        $.ajax({
+            url: wikiUrl,
+            dataType: "jsonp",
+            jsonp: "callback",
+        }).done(function (response) {
+			if ( console && console.log ) {
+				console.log(response[3][0]);  //[3] filters to just the resulting uris, [0] picks the first uri
+				foodData.push(response[3][0]);
+			}
+		});
+    } //end FOR loop
+
+console.log(foodData);
+
+var testArray = ["abc", "def"];
+console.log(testArray);
+
+console.log(foodData[0]);
+</script>
+
+</body>
+</html>
